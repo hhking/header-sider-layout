@@ -1,3 +1,23 @@
+## Header Sider Layout
+
+A custom layout for Ant-design-pro, based on [ant-design-pro-layout](https://github.com/ant-design/ant-design-pro-layout). Add the `both` layout type and some API for Header Nav.
+
+<h1 align="center">Header Sider Layout</h1>
+
+<div align="center">
+
+![](https://i.loli.net/2019/09/30/dQqxIfY57OZimjT.png)
+
+## New API
+
+| Property | Description | Type | Default Value |
+| --- | --- | --- | --- |
+| headerMenuProps | Props passed to ANTD MENU (for HeaderMenu), SEE (https://ant.design/components/menu-cn/) | MenuProps | same to origin menuProps |
+| headerMenuData | The menuData of header menu | MenuDataItem[] | same to origin MenuDataItem[] get from routes |
+| layout | layout menu mode, sidemenu: right navigation, topmenu: top navigation, both: header navigation and sider navigation | 'sidemenu' \| 'topmenu' \| 'both' | `'sidemenu'` |
+
+<hr>
+
 English | [简体中文](./README.zh-CN.md) [changelog](./changelog.en-US.md)
 
 [![](https://img.shields.io/npm/dw/@ant-design/pro-layout.svg)](https://www.npmjs.com/package/@ant-design/pro-layout) [![npm package](https://img.shields.io/npm/v/@ant-design/pro-layout.svg?style=flat-square?style=flat-square)](https://www.npmjs.com/package/@ant-design/pro-layout) [![](https://img.shields.io/github/issues/ant-design/ant-design-pro-layout.svg)](https://github.com/ant-design/ant-design-pro-layout/issues) [![Dependencies](https://img.shields.io/david/ant-design/ant-design-pro-layout.svg?style=flat-square)](https://david-dm.org/ant-design/ant-design-pro-layout) [![DevDependencies](https://img.shields.io/david/dev/ant-design/ant-design-pro-layout.svg?style=flat-square)](https://david-dm.org/ant-design/ant-design-pro-layout?type=dev) [![Build Status](https://dev.azure.com/chenshuai2144/Pro-Layout/_apis/build/status/ant-design.ant-design-pro-layout?branchName=master)](https://dev.azure.com/chenshuai2144/Pro-Layout/_build/latest?definitionId=2&branchName=master)
