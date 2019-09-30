@@ -1,8 +1,12 @@
 {
   "name": "header-sider-layout",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "ant-design-pro layout, based on pro-layout, with header and sider layout.",
-  "keywords": ["pro-layout", "header", "sider"],
+  "keywords": [
+    "pro-layout",
+    "header",
+    "sider"
+  ],
   "author": "hhking",
   "files": [
     "/lib",
