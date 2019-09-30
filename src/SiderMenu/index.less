@@ -40,8 +40,10 @@
       position: fixed;
       top: 0;
       left: 0;
-      padding-top: @nav-header-height;
       box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
+      &.with-header {
+        padding-top: @nav-header-height;
+      }
       .ant-menu-root {
         height: ~'calc(100vh - @{nav-header-height})';
         overflow-y: auto;

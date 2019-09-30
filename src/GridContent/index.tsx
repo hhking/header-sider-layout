@@ -18,7 +18,6 @@ const GridContent: React.SFC<GridContentProps> = props => (
         contentWidth: propsContentWidth,
         layout: propsLayout,
       } = props;
-      console.log(value);
       const contentWidth = propsContentWidth || value.contentWidth;
       const layout = propsLayout || value.layout;
       let className = 'ant-pro-grid-content';
