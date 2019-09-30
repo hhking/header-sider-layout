@@ -8,6 +8,22 @@ A custom layout for Ant-design-pro, based on [ant-design-pro-layout](https://git
 
 ![](https://i.loli.net/2019/09/30/dQqxIfY57OZimjT.png)
 
+</div>
+
+## Usage
+
+```bash
+npm i header-sider-layout --save
+// or
+yarn add header-sider-layout
+```
+
+```jsx
+import ProLayout from 'header-sider-layout';
+
+render(<ProLayout />, document.getElementById('root'));
+```
+
 ## New API
 
 | Property | Description | Type | Default Value |
