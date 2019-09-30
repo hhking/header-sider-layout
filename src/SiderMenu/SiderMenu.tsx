@@ -152,7 +152,7 @@ export default class SiderMenu extends Component<
       onMenuHeaderClick,
     } = this.props;
     const { openKeys } = this.state;
-
+    const isBoth = layout === 'both';
     // 如果收起，并且为顶部布局，openKeys 为 false 都不控制 openKeys
     const defaultProps =
       collapsed || layout !== 'sidemenu' || openKeys === false
@@ -162,6 +162,7 @@ export default class SiderMenu extends Component<
     const siderClassName = classNames('ant-pro-sider-menu-sider', {
       'fix-sider-bar': fixSiderbar,
       light: theme === 'light',
+      'with-header': isBoth,
     });
 
     return (
@@ -181,13 +182,16 @@ export default class SiderMenu extends Component<
         theme={theme}
         className={siderClassName}
       >
-        <div
-          className="ant-pro-sider-menu-logo"
-          onClick={onMenuHeaderClick}
-          id="logo"
-        >
-          {defaultRenderLogoAndTitle(logo, title, renderLogoAndTitle)}
-        </div>
+        {!isBoth && (
+          <div
+            className="ant-pro-sider-menu-logo"
+            onClick={onMenuHeaderClick}
+            id="logo"
+          >
+            {defaultRenderLogoAndTitle(logo, title, renderLogoAndTitle)}
+          </div>
+        )}
+
         <BaseMenu
           {...this.props}
           mode="inline"

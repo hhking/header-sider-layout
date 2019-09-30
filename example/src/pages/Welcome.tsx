@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default (): React.ReactNode => (
-  <p style={{ textAlign: 'center' }}>
+  <div style={{ textAlign: 'center' }}>
     Want to add more pages? Please refer to{' '}
     <a
       href="https://pro.ant.design/docs/block-cn"
@@ -11,5 +11,6 @@ export default (): React.ReactNode => (
       use block
     </a>
     。
-  </p>
+    <p style={{ height: '120vh', marginTop: '150px' }}>test content overflow</p>
+  </div>
 );

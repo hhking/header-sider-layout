@@ -8,9 +8,9 @@ export interface Settings {
    */
   navTheme: MenuTheme | undefined;
   /**
-   * nav menu position: `sidemenu` or `topmenu`
+   * nav menu position: `sidemenu`, `topmenu` or `both`
    */
-  layout: 'sidemenu' | 'topmenu';
+  layout: 'sidemenu' | 'topmenu' | 'both';
   /**
    * layout of content: `Fluid` or `Fixed`, only works when layout is topmenu
    */

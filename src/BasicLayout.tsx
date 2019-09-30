@@ -90,7 +90,8 @@ const headerRender = (props: BasicLayoutProps): React.ReactNode => {
   if (props.headerRender === false) {
     return null;
   }
-  return <Header {...props} />;
+
+  return <Header {...props} {...props.headerMenuProps} />;
 };
 
 const footerRender = (props: BasicLayoutProps): React.ReactNode => {
@@ -115,7 +116,14 @@ const renderSiderMenu = (props: BasicLayoutProps): React.ReactNode => {
     return menuRender(props, <SiderMenu {...props} />);
   }
 
-  return <SiderMenu {...props} {...props.menuProps} />;
+  const { menuProps, theme } = props;
+  const newProps = {
+    ...props,
+    ...menuProps,
+    theme: layout === 'both' ? 'light' : theme,
+  };
+
+  return <SiderMenu {...newProps} />;
 };
 
 const defaultPageTitleRender = (
@@ -191,6 +199,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
     siderWidth = 256,
     menu,
     menuDataRender,
+    headerMenuData,
   } = props;
 
   const formatMessage = ({
@@ -241,6 +250,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
   // If it is a fix menu, calculate padding
   // don't need padding in phone mode
   const hasLeftPadding = fixSiderbar && PropsLayout !== 'topmenu' && !isMobile;
+  const isBoth = PropsLayout === 'both';
 
   // whether to close the menu
   const [collapsed, onCollapse] = useCollapsed(
@@ -270,59 +280,84 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
     breadcrumb,
   });
 
+  const containerClass = classNames({
+    'ant-pro-basicLayout-both-nav': isBoth,
+    'ant-pro-both-nav-fixed-header': isBoth && fixedHeader,
+  });
+
   return (
     <DocumentTitle title={pageTitle}>
       <ContainerQuery query={query}>
         {params => (
           <div className={classNames(params, 'ant-design-pro', 'basicLayout')}>
             <Layout>
-              {renderSiderMenu({
-                ...defaultProps,
-                menuData,
-                onCollapse,
-                isMobile,
-                theme: navTheme,
-                collapsed,
-              })}
-              <Layout
-                style={{
-                  paddingLeft: getPaddingLeft(
-                    !!hasLeftPadding,
+              {isBoth
+                ? headerRender({
+                    ...defaultProps,
+                    menuData: headerMenuData || menuData,
+                    isMobile,
                     collapsed,
-                    siderWidth,
-                  ),
-                  minHeight: '100vh',
-                }}
-              >
-                {headerRender({
-                  ...defaultProps,
-                  menuData,
-                  isMobile,
-                  collapsed,
-                  onCollapse,
-                })}
-                <Content
-                  className="ant-pro-basicLayout-content"
-                  style={!fixedHeader ? { paddingTop: 0 } : {}}
+                    onCollapse,
+                  })
+                : renderSiderMenu({
+                    ...defaultProps,
+                    menuData,
+                    onCollapse,
+                    isMobile,
+                    theme: navTheme,
+                    collapsed,
+                  })}
+              <Layout className={containerClass}>
+                {isBoth &&
+                  renderSiderMenu({
+                    ...defaultProps,
+                    menuData,
+                    onCollapse,
+                    isMobile,
+                    theme: navTheme,
+                    collapsed,
+                  })}
+                <Layout
+                  style={{
+                    paddingLeft: getPaddingLeft(
+                      !!hasLeftPadding,
+                      collapsed,
+                      siderWidth,
+                    ),
+                    minHeight: isBoth ? 'calc(100vh - 64px)' : '100vh',
+                  }}
                 >
-                  <RouteContext.Provider
-                    value={{
-                      breadcrumb: breadcrumbProps,
-                      ...props,
-                      menuData,
+                  {!isBoth &&
+                    headerRender({
+                      ...defaultProps,
+                      menuData: headerMenuData || menuData,
                       isMobile,
                       collapsed,
-                      title: pageTitle.split('-')[0].trim(),
-                    }}
+                      onCollapse,
+                    })}
+                  <Content
+                    className="ant-pro-basicLayout-content"
+                    style={!fixedHeader || isBoth ? { paddingTop: 0 } : {}}
                   >
-                    {children}
-                  </RouteContext.Provider>
-                </Content>
-                {footerRender({
-                  isMobile,
-                  collapsed,
-                  ...defaultProps,
-                })}
+                    <RouteContext.Provider
+                      value={{
+                        breadcrumb: breadcrumbProps,
+                        ...props,
+                        menuData,
+                        isMobile,
+                        collapsed,
+                        title: pageTitle.split('-')[0].trim(),
+                      }}
+                    >
+                      {children}
+                    </RouteContext.Provider>
+                  </Content>
+                  {footerRender({
+                    isMobile,
+                    collapsed,
+                    ...defaultProps,
+                  })}
+                </Layout>
               </Layout>
             </Layout>
           </div>

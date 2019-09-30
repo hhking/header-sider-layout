@@ -29,6 +29,36 @@ export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
   };
 };
 
+const headerMenuData = [
+  {
+    path: 'https://pro.ant.design/',
+    icon: 'project',
+    name: 'Ant Design Pro',
+    target: '_blank',
+    key: 1,
+  },
+  {
+    path: 'https://ant.design/index-cn',
+    icon: 'project',
+    name: 'Ant Design',
+    key: 2,
+    children: [
+      {
+        path: 'https://ant.design/docs/react/introduce-cn',
+        icon: 'control',
+        name: '组件',
+        key: 3,
+      },
+      {
+        path: 'https://ant.design/docs/spec/introduce-cn',
+        icon: 'control',
+        name: '设计语言',
+        key: 4,
+      },
+    ],
+  },
+];
+
 const BasicLayout: React.FC<BasicLayoutProps> = props => {
   const [collapsed, handleMenuCollapse] = useState<boolean>(true);
   const [settings, setSettings] = useState<Partial<Settings>>({});
@@ -55,6 +85,11 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
         onMenuHeaderClick={() => history.push('/')}
         {...props}
         {...settings}
+        headerMenuData={headerMenuData}
+        headerMenuProps={{
+          selectedKeys: ['1'],
+        }}
+        layout="both"
       >
         <PageHeaderWrapper>{props.children}</PageHeaderWrapper>
       </ProLayout>

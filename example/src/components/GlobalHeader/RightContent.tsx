@@ -5,7 +5,7 @@ import styles from './index.less';
 export type SiderTheme = 'light' | 'dark';
 export interface GlobalHeaderRightProps {
   theme?: SiderTheme;
-  layout?: 'sidemenu' | 'topmenu';
+  layout?: 'sidemenu' | 'topmenu' | 'both';
 }
 
 const GlobalHeaderRight: React.SFC<GlobalHeaderRightProps> = props => {
