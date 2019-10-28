@@ -277,7 +277,7 @@ export default class BaseMenu extends Component<BaseMenuProps> {
       selectedKeys = [openKeys[openKeys.length - 1]];
     }
     let props = {};
-    if (openKeys && !collapsed && layout === 'sidemenu') {
+    if (openKeys && !collapsed && layout !== 'topmenu') {
       props = {
         openKeys: openKeys.length === 0 ? [...selectedKeys] : openKeys,
       };

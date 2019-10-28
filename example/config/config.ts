@@ -51,7 +51,7 @@ export default {
       component: '../layouts/BasicLayout',
       routes: [
         {
-          path: '/',
+          path: '/welcome',
           name: 'welcome',
           icon: 'smile',
           component: './Welcome',
@@ -86,9 +86,30 @@ export default {
           ],
         },
         {
-          path: 'single',
+          path: '/single',
           name: 'Single',
           component: './Welcome',
+          icon: 'alert',
+          routes: [
+            {
+              path: '/single/single',
+              name: 'single1',
+              icon: 'smile',
+              component: './Welcome',
+            },
+            {
+              path: '/single/single2',
+              name: 'single2',
+              icon: 'smile',
+              component: './Welcome',
+            },
+            {
+              path: '/single/single3',
+              name: 'single3',
+              icon: 'smile',
+              component: './Welcome',
+            },
+          ],
         },
       ],
     },
