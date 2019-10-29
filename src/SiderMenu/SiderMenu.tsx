@@ -195,6 +195,7 @@ export default class SiderMenu extends Component<
         <BaseMenu
           {...this.props}
           mode="inline"
+          type="sider"
           handleOpenChange={this.handleOpenChange}
           onOpenChange={this.handleOpenChange}
           style={{ padding: '16px 0', width: '100%' }}
