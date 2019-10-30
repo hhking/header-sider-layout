@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Layout } from 'antd';
+import { Layout, Icon } from 'antd';
+import debounce from 'lodash/debounce';
 import classNames from 'classnames';
 import { MenuProps } from 'antd/lib/menu';
 
@@ -7,6 +8,7 @@ import './index.less';
 import { WithFalse } from '../typings';
 import BaseMenu, { BaseMenuProps } from './BaseMenu';
 import { getDefaultCollapsedSubMenus } from './SiderMenuUtils';
+import { isBrowser } from '../utils/utils';
 
 const { Sider } = Layout;
 
@@ -44,6 +46,10 @@ export const defaultRenderLogoAndTitle = (
   );
 };
 
+const defaultRenderCollapsedButton = (collapsed?: boolean) => (
+  <Icon type={collapsed ? 'menu-unfold' : 'menu-fold'} />
+);
+
 export interface SiderMenuProps
   extends Pick<BaseMenuProps, Exclude<keyof BaseMenuProps, ['onCollapse']>> {
   logo?: React.ReactNode;
@@ -52,6 +58,7 @@ export interface SiderMenuProps
     (logo: React.ReactNode, title: React.ReactNode) => React.ReactNode
   >;
   onMenuHeaderClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+  collapsedButtonRender?: WithFalse<(collapsed?: boolean) => React.ReactNode>;
 
   /**
    * 要给菜单的props, 参考antd-menu的属性。https://ant.design/components/menu-cn/
@@ -102,8 +109,20 @@ export default class SiderMenu extends Component<
     };
   }
 
+  triggerResizeEvent = debounce(() => {
+    const event = document.createEvent('HTMLEvents');
+    event.initEvent('resize', true, false);
+    if (isBrowser()) {
+      window.dispatchEvent(event);
+    }
+  });
+
   componentDidMount(): void {
     firstMount = false;
+  }
+
+  componentWillUnmount(): void {
+    this.triggerResizeEvent.cancel();
   }
 
   isMainMenu: (key: string) => boolean = key => {
@@ -135,6 +154,35 @@ export default class SiderMenu extends Component<
     } else {
       this.setState({ openKeys: [...openKeys] });
     }
+  };
+
+  toggle = () => {
+    const { collapsed, onCollapse } = this.props;
+    if (onCollapse) onCollapse(!collapsed);
+    this.triggerResizeEvent();
+  };
+
+  renderCollapsedButton = () => {
+    const {
+      collapsed,
+      collapsedButtonRender = defaultRenderCollapsedButton,
+      layout,
+    } = this.props;
+
+    if (collapsedButtonRender !== false && layout === 'both') {
+      return (
+        <div className="ant-pro-sider-menu-collapsed">
+          <span
+            className={classNames('ant-pro-sider-menu-trigger', { collapsed })}
+            onClick={this.toggle}
+          >
+            {collapsedButtonRender(collapsed)}
+          </span>
+        </div>
+      );
+    }
+
+    return null;
   };
 
   render(): React.ReactNode {
@@ -191,7 +239,7 @@ export default class SiderMenu extends Component<
             {defaultRenderLogoAndTitle(logo, title, renderLogoAndTitle)}
           </div>
         )}
-
+        {this.renderCollapsedButton()}
         <BaseMenu
           {...this.props}
           mode="inline"

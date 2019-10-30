@@ -28,6 +28,19 @@
       vertical-align: middle;
     }
   }
+  &-collapsed {
+    padding-top: 12px;
+    overflow: hidden;
+  }
+  &-trigger {
+    float: right;
+    padding: 0 16px 0 24px;
+    cursor: pointer;
+    transition: all 0.3s;
+    &.collapsed {
+      padding: 0 32px;
+    }
+  }
   &-sider {
     position: relative;
     z-index: 10;

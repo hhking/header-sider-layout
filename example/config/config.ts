@@ -51,6 +51,10 @@ export default {
       component: '../layouts/BasicLayout',
       routes: [
         {
+          path: '/',
+          redirect: '/welcome/welcome',
+        },
+        {
           path: '/welcome',
           name: 'welcome',
           icon: 'smile',
